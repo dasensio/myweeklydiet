@@ -30,8 +30,8 @@ You are a master, therefore you will do...
 ## Firsts steps
 You have to setup your environment: 
 1. Install Visual Studio Community 2019
-2. Create a new repo in GitHub
-3. Clone the repo and start to work
+2. Set up an Azure subscription
+3. Set up an GitHub account and create a new repo
 
 ## Next steps
 [You are about to build the API](https://github.com/dasensio/myweeklydiet/blob/master/API.md)
