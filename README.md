@@ -34,8 +34,6 @@ You have to setup your environment:
 3. Set up an GitHub account and create a new repo
 
 ## Next steps
-[You are about to build the API](https://github.com/dasensio/myweeklydiet/blob/master/API.md)
-
-Next, it's time to build the Web UI with Angular **(Comming soon)**
-
-Finally, let's go to develop an awesom mobile app with Xamarin **(Comming soon)**
+1. [You are about to build the API](https://github.com/dasensio/myweeklydiet/blob/master/API.md)
+2. Next, it's time to build the Web UI with Angular **(Comming soon)**
+3. Finally, let's go to develop an awesom mobile app with Xamarin **(Comming soon)**
