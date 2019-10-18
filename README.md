@@ -28,6 +28,6 @@ You are a master, therefore you will do...
 - Nice control of exceptions (standard format)
 
 ## Next steps
-You are about to build the API
+[You are about to build the API](https://github.com/dasensio/myweeklydiet/blob/master/API.md)
 Next, it's time to build the Web UI with Angular
 Finally, let's go to develop an awesom mobile app with Xamarin
