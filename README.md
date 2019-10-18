@@ -26,3 +26,8 @@ You are a master, therefore you will do...
 - JWT for API autorization
 - Nice use of asynchronous programming
 - Nice control of exceptions (standard format)
+
+## Next steps
+You are about to build the API
+Next, it's time to build the Web UI with Angular
+Finally, let's go to develop an awesom mobile app with Xamarin
