@@ -30,7 +30,7 @@ You are a master, therefore you will do...
 ## Firsts steps
 You have to setup your environment: 
 1. Install Visual Studio Community 2019
-2. [Set up an Azure subscription](https://github.com/dasensio/myweeklydiet/blob/master/setup-azure-subscription.md)
+[2. Set up an Azure subscription](https://github.com/dasensio/myweeklydiet/blob/master/setup-azure-subscription.md)
 3. Set up an GitHub account and create a new repo
 
 ## Next steps
