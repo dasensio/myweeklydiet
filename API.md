@@ -31,3 +31,5 @@ The basic architecture of a Web API can be like this:
 - Models: Classes for store data
 - Helpers: Useful classes
 - Exceptions: Exceptions classes
+
+Let's go to create this structure
