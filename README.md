@@ -27,6 +27,12 @@ You are a master, therefore you will do...
 - Nice use of asynchronous programming
 - Nice control of exceptions (standard format)
 
+## Firsts steps
+You have to setup your environment: 
+1. Install Visual Studio Community 2019
+2. Create a new repo in GitHub
+3. Clone the repo and start to work
+
 ## Next steps
 [You are about to build the API](https://github.com/dasensio/myweeklydiet/blob/master/API.md)
 
