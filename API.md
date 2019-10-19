@@ -206,3 +206,23 @@ namespace myweeklydiet.Repositories
     }
 }
 ```
+
+Finally, you are about to add the repository to the app context for use it in the future. Go to Startup.cs and create a new method called **ConfigureRepositories** with IServiceCollection as input param. It seems like this:
+
+```C#
+private void ConfigureRepositories(IServiceCollection services)
+{
+    services.AddScoped<IIngredientRepository, IngredientRepository>();
+}
+```
+
+And then, add the new method to ConfigureServicesMethod, like this:
+```C#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+    ConfigureDBContexts(services);
+    ConfigureRepositories(services);
+}
+```
