@@ -28,8 +28,32 @@ The basic architecture of a Web API can be like this:
 - Controllers: Endpoints for the API
 - Services: Business layer
 - Repositories: Database operations
+- Repositories/DataContexts: Classes for DataContexts
 - Models: Classes for store data
+- Models/Databases: Clases for store data from database
 - Helpers: Useful classes
 - Exceptions: Exceptions classes
 
 Let's go to create this structure
+
+Next, you need some nuget packages for work with swagger, authorization and more:
+- Microsoft.AspNetCore.Mvc.Versioning (3.1.2): For API Versioning
+- Swashbuckle.AspNetCore (4.0.1): For Swagger
+- System.IdentityModel.Tokens.Jwt (5.5.0): For authorization
+- System.Configuration.ConfigurationManager (4.6.0): For read appsettings.json
+
+## Creating the first functionality
+First, you want to create the controller for the master data of ingredients. This data could be selected by the user to make his own meals. First, create a new table called "Ingredient" with those fields:
+- Id (uniqueidentifier)
+- Name (nvarchar(255))
+- Unit (nvarchar(255))
+
+> You can use SQL Management Studio for do it
+
+Next, create a new class in **Models/Database**, called **Ingredient** with the table properties. Add the [Table("Ingredient")] attribute to the class and resolve usings.
+
+Next, you are about to create a new DataContext. This class is used by work with database, mapping a table. Create a new class in **Repositories/DataContexts**, called **IngredientContext**. Is needed that this class inherits from **DbContext** and a constructor with DbContextOptions<IngredientContext> as parameter.
+  
+Finally, you must to create a DbSet property for manage Ingredients data
+
+Next, create a new DataContext for this model. Create a new class in **Repositories/DataContexts** called **IngredientContext**
