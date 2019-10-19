@@ -11,3 +11,6 @@ Select the Basic plan an press **Review + Create**
 
 The result must be like this
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/05_Create_sql_server_(4).png)
+
+You can get the connection string here:
+![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/05_Create_sql_server_(5).png)
