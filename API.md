@@ -75,13 +75,17 @@ You need to add de new DataContext to the services collection in startup class. 
 
 ```C#
 private void ConfigureDBContexts(IServiceCollection services)
-        {
-            services.AddDbContext<IngredientContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        }
+{
+    services.AddDbContext<IngredientContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+}
 ```
 
 Next, modify the ConfigureServices Method and call the new method
 ```C#
-ConfigureDBContexts(services);
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+    ConfigureDBContexts(services);
+}
 ```
