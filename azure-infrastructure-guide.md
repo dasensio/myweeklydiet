@@ -11,7 +11,11 @@ Go to "Resources groups" and click on **+Add**
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/03_Create_resource_group_(1).png)
 
 Fill the resource group name and click on **Review + Create**
-![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/03_Create_resource_group_(2).png)
+![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/03_Create_resource_group_(2b).png)
 
 Your resource group will be created
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/03_Create_resource_group_(3).png)
+
+## Next steps
+1. [Setup Azure App Service](https://github.com/dasensio/myweeklydiet/blob/master/setup-azure-app-service.md)
+2. [Setup Azure SQL Database](https://github.com/dasensio/myweeklydiet/blob/master/setup-azure-sql-database.md)
