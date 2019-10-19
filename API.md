@@ -42,6 +42,15 @@ Next, you need some nuget packages for work with swagger, authorization and more
 - System.IdentityModel.Tokens.Jwt (5.5.0): For authorization
 - System.Configuration.ConfigurationManager (4.6.0): For read appsettings.json
 
+## Prepare the application settings
+You need to store in appsettings.json the ConnectionString of your database. Get this connection string from azure SQL configuration, and create a new key in appsettings.json, like this
+
+```json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=tcp:{yourServer},1433;Initial Catalog=myweeklydiet;Persist Security Info=False;User ID={yourUser};Password={yourPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  }
+```
+
 ## Creating the first functionality
 First, you want to create the controller for the master data of ingredients. This data could be selected by the user to make his own meals. First, create a new table called "Ingredient" with those fields:
 - Id (uniqueidentifier)
