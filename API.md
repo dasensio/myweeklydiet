@@ -51,9 +51,9 @@ First, you want to create the controller for the master data of ingredients. Thi
 > You can use SQL Management Studio for do it
 
 Next, create a new class in **Models/Database**, called **Ingredient** with the table properties. Add the [Table("Ingredient")] attribute to the class and resolve usings.
+![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(2).png)
 
 Next, you are about to create a new DataContext. This class is used by work with database, mapping a table. Create a new class in **Repositories/DataContexts**, called **IngredientContext**. Is needed that this class inherits from **DbContext** and a constructor with DbContextOptions<IngredientContext> as parameter.
   
 Finally, you must to create a DbSet property for manage Ingredients data
-
-Next, create a new DataContext for this model. Create a new class in **Repositories/DataContexts** called **IngredientContext**
+![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(1).png)
