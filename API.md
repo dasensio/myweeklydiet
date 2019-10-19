@@ -216,7 +216,7 @@ private void ConfigureRepositories(IServiceCollection services)
 }
 ```
 
-And then, add the new method to ConfigureServicesMethod, like this:
+And then, add the new method to ConfigureServices method, like this:
 ```C#
 public void ConfigureServices(IServiceCollection services)
 {
@@ -226,3 +226,5 @@ public void ConfigureServices(IServiceCollection services)
     ConfigureRepositories(services);
 }
 ```
+
+### Create the service
