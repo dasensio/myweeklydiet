@@ -126,3 +126,83 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 Now, the DbContext is ready for use in your repository
+
+### Create the repository
+You need a repository for manage the database operations. First, you are going to create a interface with the definition of the operations. Create a new interface in **Repositories/Interfaces** directory, called **IIngredientRepository**, with some operations: Insert, Update, Delete, Get and GetAll.
+
+```C#
+using myweeklydiet.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Repositories.Interfaces
+{
+    public interface IIngredientRepository
+    {
+        Task<Ingredient> Insert(Ingredient ingredient);
+        Task<Ingredient> Update(Ingredient ingredient);
+        Task Delete(Guid id);
+        Task<Ingredient> Get(Guid id);
+        Task<IEnumerable<Ingredient>> GetAll();
+    }
+}
+```
+
+Next, you are about to create the repository with the operations. You are focusing in the methods Insert and GetAll, not implementing the rest for now. Create a new class in **Repositories** directory called **IngredientRepository**, implementing IIngredientRepository.
+
+You need to create a constructor with the IngredientContext for work with the database. 
+
+The GetAll method will return context.Ingredients and the Insert method will set the Id and insert the new object. The class seems like this:
+
+```C#
+using Microsoft.EntityFrameworkCore;
+using myweeklydiet.Models;
+using myweeklydiet.Repositories.DataContexts;
+using myweeklydiet.Repositories.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Repositories
+{
+    public class IngredientRepository : IIngredientRepository
+    {
+        private IngredientContext _context;
+
+        public IngredientRepository(IngredientContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Ingredient>> GetAll()
+        {
+            return await _context.Ingredients.ToListAsync();
+        }
+
+        public async Task<Ingredient> Insert(Ingredient ingredient)
+        {
+            ingredient.Id = Guid.NewGuid();
+            await _context.AddAsync(ingredient);
+            await _context.SaveChangesAsync();
+
+            return ingredient;
+        }
+
+        public Task Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Ingredient> Get(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Ingredient> Update(Ingredient ingredient)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+```
