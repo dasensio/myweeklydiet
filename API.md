@@ -62,13 +62,49 @@ First, you want to create the controller for the master data of ingredients. Thi
 
 ### Create the model
 Next, create a new class in **Models/Database**, called **Ingredient** with the table properties. Add the [Table("Ingredient")] attribute to the class and resolve usings.
-![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(2).png)
+```C#
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace myweeklydiet.Models
+{
+    [Table("Ingredient")]
+    public class Ingredient
+    {
+        public Guid? Id { get; set; }
+        public String Name { get; set; }
+        public String Unit { get; set; }
+    }
+}
+```
 
 ### Create the data context
 Next, you are about to create a new DataContext. This class is used by work with database, mapping a table. Create a new class in **Repositories/DataContexts**, called **IngredientContext**. Is needed that this class inherits from **DbContext** and a constructor with DbContextOptions<IngredientContext> as parameter.
   
 Finally, you must to create a DbSet property for manage Ingredients data
-![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(1).png)
+```C#
+using Microsoft.EntityFrameworkCore;
+using myweeklydiet.Models;
+
+namespace myweeklydiet.Repositories.DataContexts
+{
+    public class IngredientContext : DbContext
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        public IngredientContext(DbContextOptions<IngredientContext> options) : base(options)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DbSet<Ingredient> Ingredients { get; set; }
+    }
+}
+```
 
 ### Add the new DbContext to the application context
 You need to add de new DataContext to the services collection in startup class. Open Startup.cs and create a new method called ConfigureDbContexts, with IServiceCollection as input parameter:
@@ -89,3 +125,4 @@ public void ConfigureServices(IServiceCollection services)
     ConfigureDBContexts(services);
 }
 ```
+Now, the DbContext is ready for use in your repository
