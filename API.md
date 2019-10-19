@@ -52,6 +52,7 @@ You need to store in appsettings.json the ConnectionString of your database. Get
 ```
 
 ## Creating the first functionality
+### Create the table
 First, you want to create the controller for the master data of ingredients. This data could be selected by the user to make his own meals. First, create a new table called "Ingredient" with those fields:
 - Id (uniqueidentifier)
 - Name (nvarchar(255))
@@ -59,10 +60,28 @@ First, you want to create the controller for the master data of ingredients. Thi
 
 > You can use SQL Management Studio for do it
 
+### Create the model
 Next, create a new class in **Models/Database**, called **Ingredient** with the table properties. Add the [Table("Ingredient")] attribute to the class and resolve usings.
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(2).png)
 
+### Create the data context
 Next, you are about to create a new DataContext. This class is used by work with database, mapping a table. Create a new class in **Repositories/DataContexts**, called **IngredientContext**. Is needed that this class inherits from **DbContext** and a constructor with DbContextOptions<IngredientContext> as parameter.
   
 Finally, you must to create a DbSet property for manage Ingredients data
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/02_Create_DataModel_Structure_(1).png)
+
+### Add the new DbContext to the application context
+You need to add de new DataContext to the services collection in startup class. Open Startup.cs and create a new method called ConfigureDbContexts, with IServiceCollection as input parameter:
+
+```C#
+private void ConfigureDBContexts(IServiceCollection services)
+        {
+            services.AddDbContext<IngredientContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        }
+```
+
+Next, modify the ConfigureServices Method and call the new method
+```C#
+ConfigureDBContexts(services);
+```
