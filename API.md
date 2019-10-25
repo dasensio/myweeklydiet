@@ -405,3 +405,54 @@ Indicates that the method can return 201, 400 or 500 responses.
 [Produces("application/json")]
 ```
 Indicates that the method returns a json result
+
+The final result of your controller is like this:
+
+```C#
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using myweeklydiet.Models;
+using myweeklydiet.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class IngredientController : ControllerBase
+    {
+        private IIngredientService _service;
+
+        public IngredientController(IIngredientService service)
+        {
+            _service = service;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(Ingredient), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IEnumerable<Ingredient>> GetAll()
+        {
+            return await _service.GetAll();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(Ingredient), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<Ingredient> Insert(Ingredient ingredient)
+        {
+            return await _service.Insert(ingredient);
+        }
+    }
+}
+```
+
+This is the moment for test your API!
+
+## Next Steps
+1. API Versioning (Comming soon)
+2. Document your API using Swagger (Comming soon)
