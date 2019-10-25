@@ -189,42 +189,91 @@ namespace myweeklydiet.Repositories
             return ingredient;
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Ingredient> Get(Guid id)
+        public async Task<Ingredient> Get(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Ingredient> Update(Ingredient ingredient)
+        public async Task<Ingredient> Update(Ingredient ingredient)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+
+```
+
+Finally, you need to create the class **IngredientService** inside **Services** for implement **IIngredientService**. You're focused in implement GetAll and Insert methods. Also, you need to create a constructor with the **IIngredientRepository** for work with **IngredientRepository** and a method to make the insert validations.
+
+The method GetAll will return the result of repository.GetAll. The method Insert will make validations, and will return the result of repository.Insert method.
+
+```C#
+using myweeklydiet.Models;
+using myweeklydiet.Repositories.Interfaces;
+using myweeklydiet.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Services
+{
+    public class IngredientService : IIngredientService
+    {
+        private IIngredientRepository _repository;
+
+        private void InsertValidations(Ingredient ingredient)
+        {
+            if (ingredient == null)
+            {
+                throw new Exception("Ingredient is required");
+            }
+
+            if (String.IsNullOrEmpty(ingredient.Name))
+            {
+                throw new Exception("The name of the ingredient is required");
+            }
+
+            if (String.IsNullOrEmpty(ingredient.Unit))
+            {
+                throw new Exception("The unit of the ingredient is required");
+            }
+        }
+
+        public IngredientService(IIngredientRepository repository)
+        {
+            _repository = repository;
+        }
+        public async Task Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Ingredient> Get(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Ingredient>> GetAll()
+        {
+            return await _repository.GetAll();
+        }
+
+        public async Task<Ingredient> Insert(Ingredient ingredient)
+        {
+            InsertValidations(ingredient);
+
+            return await _repository.Insert(ingredient);
+        }
+
+        public async Task<Ingredient> Update(Ingredient ingredient)
         {
             throw new NotImplementedException();
         }
     }
 }
 ```
-
-Finally, you are about to add the repository to the app context for use it in the future. Go to Startup.cs and create a new method called **ConfigureRepositories** with IServiceCollection as input param. It seems like this:
-
-```C#
-private void ConfigureRepositories(IServiceCollection services)
-{
-    services.AddScoped<IIngredientRepository, IngredientRepository>();
-}
-```
-
-And then, add the new method to ConfigureServices method, like this:
-```C#
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-    ConfigureDBContexts(services);
-    ConfigureRepositories(services);
-}
-```
-
-### Create the service
