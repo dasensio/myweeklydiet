@@ -2,10 +2,7 @@
 
 An API Restful uses the HTTP verbs for define this behavior:
 
-- GET: For get data. Example:
-
-http://myweeklydiet.com/api/ingredients
-
+- GET: For get data
 - POST: For create new data
 - PUT: For modify data
 - DELETE: For delete data
