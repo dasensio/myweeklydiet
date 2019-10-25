@@ -208,7 +208,50 @@ namespace myweeklydiet.Repositories
 
 ```
 
-Finally, you need to create the class **IngredientService** inside **Services** for implement **IIngredientService**. You're focused in implement GetAll and Insert methods. Also, you need to create a constructor with the **IIngredientRepository** for work with **IngredientRepository** and a method to make the insert validations.
+Finally, you are about to add the repository to the app context for use it in the future. Go to Startup.cs and create a new method called ConfigureRepositories with IServiceCollection as input param. It seems like this:
+
+```C#
+private void ConfigureRepositories(IServiceCollection services)
+{
+    services.AddScoped<IIngredientRepository, IngredientRepository>();
+}
+```
+
+And then, add the new method to ConfigureServices method, like this:
+
+```C#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+    ConfigureDBContexts(services);
+    ConfigureRepositories(services);
+}
+```
+
+### Create service
+Next step is to create the service. As the repository, you need an interface and a class that implements it. First, create a new interface in **Services/Interfaces** called **IIngredientService** with the methods Insert, Update, Delete, Get and GetAll.
+
+```C#
+using myweeklydiet.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Services.Interfaces
+{
+    public interface IIngredientService
+    {
+        Task<Ingredient> Insert(Ingredient ingredient);
+        Task<Ingredient> Update(Ingredient ingredient);
+        Task Delete(Guid id);
+        Task<Ingredient> Get(Guid id);
+        Task<IEnumerable<Ingredient>> GetAll();
+    }
+}
+```
+
+Then, you need to create the class **IngredientService** inside **Services** for implement **IIngredientService**. You're focused in implement GetAll and Insert methods. Also, you need to create a constructor with the **IIngredientRepository** for work with **IngredientRepository** and a method to make the insert validations.
 
 The method GetAll will return the result of repository.GetAll. The method Insert will make validations, and will return the result of repository.Insert method.
 
@@ -275,5 +318,27 @@ namespace myweeklydiet.Services
             throw new NotImplementedException();
         }
     }
+}
+```
+
+Finally, as the repository, you need to add the service to the app context for use it in the future. Go to Startup.cs and create a new method called **ConfigureAPIServices** with IServiceCollection as input param. It seems like this:
+
+```C#
+private void ConfigureAPIServices(IServiceCollection services)
+{
+    services.AddScoped<IIngredientService, IngredientService>();
+}
+```
+
+And call the method inside the ConfigureServices method:
+
+```C#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+    ConfigureDBContexts(services);
+    ConfigureRepositories(services);
+    ConfigureAPIServices(services);
 }
 ```
