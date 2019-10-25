@@ -386,5 +386,18 @@ BUT...
 A API controller need some decoration with attributes that defines [the behavior of the methods of our API Restful](https://github.com/dasensio/myweeklydiet/blob/master/api-restful-behavior.md).
 
 The most important attributes are:
-- [ApiController]: Class attribute. Defines that the class is an API Controller
-- [Route("api/[controller]")]: Class attribute. Defines the route of the controller. [controller] will be **Ingredient** in this case, part of the name of the **Ingredient**Controller.
+- **[ApiController]**: Class attribute. Defines that the class is an API Controller
+- **[Route("api/[controller]")]**: Class attribute. Defines the route of the controller. [controller] will be **Ingredient** in this case, part of the name of the **Ingredient**Controller.
+- **[HttpGet]**, **[HttpPost]**, **[HttpPut]**, **[HttpDelete]**: Method attribute. Verbs of the request. You can change the default route if you need. Example: with [HttpGet("test")] attribute, the url for the request will be http://yourdomain.com/**api/ingredient/test**
+- **[ProducesResponseType]**: Method attribute that indicates the type of the response. You need one for each response. For example: 
+```C#
+[ProducesResponseType(typeof(Ingredient), StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+```
+Indicates that the method can return 201, 400 or 500 responses.
+- **[Produces]**: Method attribute that indicates the Content-Type of the response. For Example: 
+```C#
+[Produces("application/json")]
+```
+Indicates that the method returns a json result
