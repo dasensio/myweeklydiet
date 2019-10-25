@@ -342,3 +342,45 @@ public void ConfigureServices(IServiceCollection services)
     ConfigureAPIServices(services);
 }
 ```
+
+### And finally... create the controller
+The controller will recieve Http requests and will call the services. This is the place where you will define your API Restful endpoints. Let's go to create a new class called **IngredientController** inside **Controllers** directory, inheriting from **ControllerBase**, with a constructor with a **IIngredientService** parameter and two methods: GetAll and Insert
+
+This seems like this:
+
+```C#
+using Microsoft.AspNetCore.Mvc;
+using myweeklydiet.Models;
+using myweeklydiet.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Controllers
+{
+    public class IngredientController : ControllerBase
+    {
+        private IIngredientService _service;
+
+        public IngredientController(IIngredientService service)
+        {
+            _service = service;
+        }
+
+        public async Task<IEnumerable<Ingredient>> GetAll()
+        {
+            return await _service.GetAll();
+        }
+
+        public async Task<Ingredient> Insert(Ingredient ingredient)
+        {
+            return await _service.Insert(ingredient);
+        }
+    }
+}
+```
+
+BUT...
+
+**It isn't enough**
+
+A API controller need some decoration with attributes that defines the behavior of the methods of our API Restful. 
