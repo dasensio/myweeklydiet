@@ -383,4 +383,8 @@ BUT...
 
 **It isn't enough**
 
-A API controller need some decoration with attributes that defines the behavior of the methods of our API Restful. 
+A API controller need some decoration with attributes that defines [the behavior of the methods of our API Restful](https://github.com/dasensio/myweeklydiet/blob/master/api-restful-behavior.md).
+
+The most important attributes are:
+- [ApiController]: Class attribute. Defines that the class is an API Controller
+- [Route("api/[controller]")]: Class attribute. Defines the route of the controller. [controller] will be **Ingredient** in this case, part of the name of the **Ingredient**Controller.
