@@ -448,6 +448,10 @@ public async Task<ActionResult<IEnumerable<IngredientDTO>>> GetAll()
     {
         return new ApiResult<IEnumerable<IngredientDTO>>(await _service.GetAll());
     }
+    catch (APIException ex)
+    {
+        return new ExceptionResult(ex);
+    }
     catch(Exception ex)
     {
         return new ExceptionResult(ex);
@@ -464,6 +468,10 @@ public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
     try
     {
         return new ApiResult<IngredientDTO>(await _service.Insert(ingredient), StatusCodes.Status201Created);
+    }
+    catch (APIException ex)
+    {
+        return new ExceptionResult(ex);
     }
     catch(Exception ex)
     {
