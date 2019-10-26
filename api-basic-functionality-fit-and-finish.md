@@ -2,7 +2,7 @@
 
 Your are about to:
 - Improve errors management
-- Use ActionResults for return data
+- Use ActionResults for return data and errors
 - Use DTO for disengage your model database and your user interface.
 
 ## Improve errors management
@@ -46,7 +46,7 @@ namespace myweeklydiet.Exceptions
 {
     public class APIException : Exception
     {
-        public APIException(APIExceptionType type, String extendedMessage = "")
+        public APIException(APIExceptionType type, String extendedMessage = "") : base(type.Message + ". " + extendedMessage)
         {
             Type = type;
             ExtendedMessage = extendedMessage;
@@ -79,3 +79,9 @@ private void InsertValidations(Ingredient ingredient)
     }
 }
 ```
+
+The use of APIException will improve your errors management. Your API **always** will returns the same format for errors and the status code defined by the exception type.
+
+## Use ActionResults for return data and errors
+Create a new directory called **StandardResults** in **Controller** directory, and create two new classes: StandardResult and ExceptionResult. Both of them inherits from ActionResult.
+
