@@ -241,7 +241,9 @@ public async Task<ActionResult<Ingredient>> Insert(Ingredient ingredient)
 }
 ```
 
-In this case, you are returning a 201 (Created) status code with the result of the operation. If any validation fails, it will return a 400 (Bad request) status code. Any other error will results in 500 (Internal server error)
+In this case, you are returning a 201 (Created) status code with the result of the operation. If any validation fails, it will return a 400 (Bad request) status code. Any other error will results in 500 (Internal server error).
+
+**It's time to test your API!**
 
 ## Use DTO for disengage your model database and your user interface
 It's important to disengage models of data transfer. For example, the date format may be different due to environment, transformations, etc. A good practise is to use [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) for work with date time data.
@@ -288,7 +290,7 @@ namespace System
     }
 }
 ```
- You need a Int64 extension for do the reverse conversion. Create a new extension class called Int64Extensions:
+ You need a Int64 extension for do the reverse conversion. Create a new extension class called **Int64Extensions**:
  
  ```C#
  namespace System
