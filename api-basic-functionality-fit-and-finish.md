@@ -242,3 +242,97 @@ public async Task<ActionResult<Ingredient>> Insert(Ingredient ingredient)
 ```
 
 In this case, you are returning a 201 (Created) status code with the result of the operation. If any validation fails, it will return a 400 (Bad request) status code. Any other error will results in 500 (Internal server error)
+
+## Use DTO for disengage your model database and your user interface
+It's important to disengage models of data transfer. For example, the date format may be different due to environment, transformations, etc. A good practise is to use [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) for work with date time data.
+
+In your model you will store DateTime, but your API must receive and returns a Unix timestamp (long).
+
+Let's go to do a new directory in **Helpers** called **Extensions**, and then create a new class called DateTimeExtensions. In this class you will create a extension to transform DateTime to Unix timestamp.
+
+```C#
+namespace System
+{
+    public static class DateTimeExtensions
+    {
+        public static Int64? ToUnixTimestamp(this DateTime? date)
+        {
+            try
+            {
+                if (date.HasValue)
+                {
+                    return date.Value.ToUnixTimestamp();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Int64 ToUnixTimestamp(this DateTime date)
+        {
+            try
+            {
+                return Convert.ToInt64((date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+}
+```
+ You need a Int64 extension for do the reverse conversion. Create a new extension class called Int64Extensions:
+ 
+ ```C#
+ namespace System
+{
+    public static class Int64Extensions
+    {
+        public static DateTime ToDateTime(this Int64 input, String timeZone = "UTC")
+        {
+            try
+            {
+                DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                date = date.AddSeconds(input);
+
+                if (!String.IsNullOrEmpty(timeZone) && timeZone != "UTC")
+                {
+                    date = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.FindSystemTimeZoneById(timeZone));
+                }
+
+                return date;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static DateTime? ToDateTime(this Int64? input, String timeZone = "UTC")
+        {
+            try
+            {
+                if (input.HasValue)
+                {
+                    return input.Value.ToDateTime(timeZone);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+}
+ ```
