@@ -218,4 +218,27 @@ public async Task<ActionResult<IEnumerable<Ingredient>>> GetAll()
     }
 }
 ```
+By default, ApiResult returns 200 status code (OK)
 
+Finally, make the same with Insert method:
+
+```C#
+[HttpPost]
+[ProducesResponseType(typeof(Ingredient), StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<Ingredient>> Insert(Ingredient ingredient)
+{
+    try
+    {
+        return new ApiResult<Ingredient>(await _service.Insert(ingredient), StatusCodes.Status201Created);
+    }
+    catch(Exception ex)
+    {
+        return new ExceptionResult(ex);
+    }
+}
+```
+
+In this case, you are returning a 201 (Created) status code with the result of the operation
