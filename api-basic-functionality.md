@@ -4,6 +4,7 @@ First, you want to create the controller for the master data of ingredients. Thi
 - Id (uniqueidentifier)
 - Name (nvarchar(255))
 - Unit (nvarchar(255))
+- CreationDate (datetime)
 
 > You can use SQL Management Studio for do it
 
@@ -21,6 +22,7 @@ namespace myweeklydiet.Models
         public Guid? Id { get; set; }
         public String Name { get; set; }
         public String Unit { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }
 ```
@@ -130,6 +132,7 @@ namespace myweeklydiet.Repositories
         public async Task<Ingredient> Insert(Ingredient ingredient)
         {
             ingredient.Id = Guid.NewGuid();
+            ingredient.CreationDate = DateTime.UtcNow;
             await _context.AddAsync(ingredient);
             await _context.SaveChangesAsync();
 
@@ -330,7 +333,7 @@ namespace myweeklydiet.Controllers
 
 **It isn't enough**
 
-A API controller need some decoration with attributes that defines [the behavior of the methods of our API Restful](https://github.com/dasensio/myweeklydiet/blob/master/api-restful-behavior.md).
+An API controller need some decoration with attributes that defines [the behavior of the methods of our API Restful](https://github.com/dasensio/myweeklydiet/blob/master/api-restful-behavior.md).
 
 The most important attributes are:
 - **[ApiController]**: Class attribute. Defines that the class is an API Controller
