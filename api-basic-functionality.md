@@ -33,7 +33,7 @@ Next, you are about to create a new DataContext. This class is used by work with
 Finally, you must to create a DbSet property for manage Ingredients data
 ```C#
 using Microsoft.EntityFrameworkCore;
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 
 namespace myweeklydiet.Repositories.DataContexts
 {
@@ -80,7 +80,7 @@ Now, the DbContext is ready for use in your repository
 You need a repository for manage the database operations. First, you are going to create a interface with the definition of the operations. Create a new interface in **Repositories/Interfaces** directory, called **IIngredientRepository**, with some operations: Insert, Update, Delete, Get and GetAll.
 
 ```C#
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -106,7 +106,7 @@ The GetAll method will return context.Ingredients and the Insert method will set
 
 ```C#
 using Microsoft.EntityFrameworkCore;
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using myweeklydiet.Repositories.DataContexts;
 using myweeklydiet.Repositories.Interfaces;
 using System;
@@ -183,7 +183,7 @@ public void ConfigureServices(IServiceCollection services)
 Next step is to create the service. As the repository, you need an interface and a class that implements it. First, create a new interface in **Services/Interfaces** called **IIngredientService** with the methods Insert, Update, Delete, Get and GetAll.
 
 ```C#
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -206,7 +206,7 @@ Then, you need to create the class **IngredientService** inside **Services** for
 The method GetAll will return the result of repository.GetAll. The method Insert will make validations, and will return the result of repository.Insert method.
 
 ```C#
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using myweeklydiet.Repositories.Interfaces;
 using myweeklydiet.Services.Interfaces;
 using System;
@@ -300,7 +300,7 @@ This seems like this:
 
 ```C#
 using Microsoft.AspNetCore.Mvc;
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using myweeklydiet.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -361,7 +361,7 @@ The final result of your controller is like this:
 ```C#
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using myweeklydiet.Models;
+using myweeklydiet.Models.Database;
 using myweeklydiet.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
