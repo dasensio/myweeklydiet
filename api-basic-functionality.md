@@ -14,7 +14,7 @@ Next, create a new class in **Models/Database**, called **Ingredient** with the 
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace myweeklydiet.Models
+namespace myweeklydiet.Models.Database
 {
     [Table("Ingredient")]
     public class Ingredient
