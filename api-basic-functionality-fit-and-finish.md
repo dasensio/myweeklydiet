@@ -355,3 +355,9 @@ namespace myweeklydiet.Models.DTO
     }
 }
 ```
+
+You must to do conversions between models and dto, but it is a boring task. You can use Automapper to do this. Add Automapper (9.0.0) package using nuget. 
+
+Your service will use Automapper for do the conversions, but you must to indicate how to make this conversion for the special fields (like CreationDate). The fields with conversion 1:1 will be converted automatically.
+
+Go to IngredientService and create a new private readonly property of type IMapper called **_mapper**_;
