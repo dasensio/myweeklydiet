@@ -360,4 +360,48 @@ You must to do conversions between models and dto, but it is a boring task. You 
 
 Your service will use Automapper for do the conversions, but you must to indicate how to make this conversion for the special fields (like CreationDate). The fields with conversion 1:1 will be converted automatically.
 
-Go to IngredientService and create a new private readonly property of type IMapper called **_mapper**_;
+Go to IngredientService and create a new private readonly property of type IMapper. In the constructor you will define the mapper, like this:
+
+```C#
+private readonly IMapper _mapper;
+
+public IngredientService(IIngredientRepository repository)
+{
+    _repository = repository;
+    _mapper = new MapperConfiguration(config => {
+        config.CreateMap<Ingredient, IngredientDTO>()
+            .ForMember(destination => destination.CreationDate, map => map.MapFrom(source => source.CreationDate.ToUnixTimestamp()));
+
+        config.CreateMap<IngredientDTO, Ingredient>()
+            .ForMember(destination => destination.CreationDate, map => map.MapFrom(source => source.CreationDate.ToDateTime(null)));
+    }).CreateMapper();
+}
+```
+
+You must to change your IngredientService for receive, convert and return IngredientDTO. Also, you have to change your IIngredientService to use IngredientDTO. The methods to change are Get, GetAll, Insert and Update
+
+```C#
+public async Task<IngredientDTO> Get(Guid id)
+{
+    throw new NotImplementedException();
+}
+
+public async Task<IEnumerable<IngredientDTO>> GetAll()
+{
+    return _mapper.Map<IEnumerable<Ingredient>, IEnumerable<IngredientDTO>>(await _repository.GetAll());
+}
+
+public async Task<IngredientDTO> Insert(IngredientDTO ingredient)
+{
+    Ingredient item = _mapper.Map<IngredientDTO, Ingredient>(ingredient);
+
+    InsertValidations(item);
+
+    return _mapper.Map<Ingredient, IngredientDTO>(await _repository.Insert(item));
+}
+
+public async Task<IngredientDTO> Update(IngredientDTO ingredient)
+{
+    throw new NotImplementedException();
+}
+```
