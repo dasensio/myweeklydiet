@@ -338,3 +338,20 @@ namespace System
     }
 }
  ```
+
+This is time to create the DTO for make future conversions between model and DTO objects. Create a new directory called **DTO** in **Models** directory. Then, create a class called IngredientDTO with the properties: Id (Guid?), Name (String), Unit (String) and... **CreationDate as Int64?**
+
+```C#
+using System;
+
+namespace myweeklydiet.Models.DTO
+{
+    public class IngredientDTO
+    {
+        public Guid? Id { get; set; }
+        public String Name { get; set; }
+        public String Unit { get; set; }
+        public Int64? CreationDate { get; set; }
+    }
+}
+```
