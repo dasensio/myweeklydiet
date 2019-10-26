@@ -83,5 +83,139 @@ private void InsertValidations(Ingredient ingredient)
 The use of APIException will improve your errors management. Your API **always** will returns the same format for errors and the status code defined by the exception type.
 
 ## Use ActionResults for return data and errors
-Create a new directory called **StandardResults** in **Controller** directory, and create two new classes: StandardResult and ExceptionResult. Both of them inherits from ActionResult.
+Create a new directory called **StandardResults** in **Controller** directory, and create three new classes: ApiResult, StandardResult and ExceptionResult. All of them inherits from ActionResult.
+
+ExceptionResults will returns the erros and the correct status code. It has the properties Code, Message, ExtendedMessage, a constructor that receive APIException, a constructor that receive Exception and a method that overrides ExecuteResult for build the response.
+
+It seems like this:
+
+```C#
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using myweeklydiet.Exceptions;
+using Newtonsoft.Json;
+using System;
+
+namespace myweeklydiet.Controllers.StandardResults
+{
+    public class ExceptionResult : ActionResult
+    {
+        private int _statusCode;
+
+        public ExceptionResult(APIException ex)
+        {
+            Code = ex.Type.Code;
+            Message = ex.Type.Message;
+            ExtendedMessage = ex.ExtendedMessage;
+            _statusCode = ex.Type.StatusCode;
+        }
+
+        public ExceptionResult(Exception ex)
+        {
+            APIException apiex = new APIException(APIExceptionType.Generic);
+            Code = apiex.Type.Code;
+            Message = apiex.Type.Message;
+            ExtendedMessage = ex.Message;
+            _statusCode = apiex.Type.StatusCode;
+        }
+
+        public String Code { get; }
+        public String Message { get; }
+        public String ExtendedMessage { get; }
+
+        public override void ExecuteResult(ActionContext context)
+        {
+            HttpResponse response = context.HttpContext.Response;
+            response.StatusCode = _statusCode;
+            response.ContentType = "application/json";
+            response.WriteAsync(JsonConvert.SerializeObject(this));
+        }
+    }
+}
+```
+
+StandardResult will returns a standard success result, with no other data. As ExceptionResult, this class has a Code, Message and it will override ExecuteResult. The constructor will receive a statusCode with 200 as default. This is the result:
+
+```C#
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+
+namespace myweeklydiet.Controllers.StandardResults
+{
+    public class StandardResult : ActionResult
+    {
+        private int _statusCode;
+        public StandardResult(int statusCode = 200)
+        {
+            Code = "001";
+            Message = "Success";
+            _statusCode = statusCode;
+        }
+
+        public String Code { get; }
+        public String Message { get; }
+
+        public override void ExecuteResult(ActionContext context)
+        {
+            HttpResponse response = context.HttpContext.Response;
+            response.StatusCode = _statusCode;
+            response.ContentType = "application/json";
+            response.WriteAsync(JsonConvert.SerializeObject(this));
+        }
+    }
+}
+```
+
+And finally, the ApiResult will return the response data and the status code specified. It uses generic types.
+
+```C#
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+
+namespace myweeklydiet.Controllers.StandardResults
+{
+    public class ApiResult<T> : ActionResult where T : class
+    {
+        private T _result;
+        private int _statusCode;
+
+        public ApiResult(T result, int statusCode = 200)
+        {
+            _result = result;
+            _statusCode = statusCode;
+        }
+
+        public override void ExecuteResult(ActionContext context)
+        {
+            HttpResponse response = context.HttpContext.Response;
+            response.StatusCode = _statusCode;
+            response.ContentType = "application/json";
+            response.WriteAsync(JsonConvert.SerializeObject(_result));
+        }
+    }
+}
+```
+
+Let's go to enjoy these useful classes. Go to IngredientController and change GetAll. You will add a try catch to use ExceptionResult and ApiResult:
+
+```C#
+[HttpGet]
+[ProducesResponseType(typeof(ApiResult<IEnumerable<Ingredient>>), StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<IEnumerable<Ingredient>>> GetAll()
+{
+    try
+    {
+        return new ApiResult<IEnumerable<Ingredient>>(await _service.GetAll());
+    }   
+    catch(Exception ex)
+    {
+        return new ExceptionResult(ex);
+    }
+}
+```
 
