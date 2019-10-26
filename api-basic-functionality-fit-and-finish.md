@@ -241,4 +241,4 @@ public async Task<ActionResult<Ingredient>> Insert(Ingredient ingredient)
 }
 ```
 
-In this case, you are returning a 201 (Created) status code with the result of the operation
+In this case, you are returning a 201 (Created) status code with the result of the operation. If any validation fails, it will return a 400 (Bad request) status code. Any other error will results in 500 (Internal server error)
