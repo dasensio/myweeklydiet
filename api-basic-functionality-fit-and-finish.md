@@ -405,3 +405,63 @@ public async Task<IngredientDTO> Update(IngredientDTO ingredient)
     throw new NotImplementedException();
 }
 ```
+
+This is the final result of IIngredientService:
+
+```C#
+using myweeklydiet.Models.DTO;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace myweeklydiet.Services.Interfaces
+{
+    public interface IIngredientService
+    {
+        Task<IngredientDTO> Insert(IngredientDTO ingredient);
+        Task<IngredientDTO> Update(IngredientDTO ingredient);
+        Task Delete(Guid id);
+        Task<IngredientDTO> Get(Guid id);
+        Task<IEnumerable<IngredientDTO>> GetAll();
+    }
+}
+```
+
+Finally, you mus to change de input and output data types of your controller:
+
+```C#
+[HttpGet]
+[ProducesResponseType(typeof(ApiResult<IEnumerable<IngredientDTO>>), StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<IEnumerable<IngredientDTO>>> GetAll()
+{
+    try
+    {
+        return new ApiResult<IEnumerable<IngredientDTO>>(await _service.GetAll());
+    }
+    catch(Exception ex)
+    {
+        return new ExceptionResult(ex);
+    }
+}
+
+[HttpPost]
+[ProducesResponseType(typeof(IngredientDTO), StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
+{
+    try
+    {
+        return new ApiResult<IngredientDTO>(await _service.Insert(ingredient), StatusCodes.Status201Created);
+    }
+    catch(Exception ex)
+    {
+        return new ExceptionResult(ex);
+    }
+}
+```
+
+Let's go to test your API!
