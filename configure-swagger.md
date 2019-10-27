@@ -71,3 +71,60 @@ Go to Debug tab -> check "Launch browser" with empty field
 Test your API, the result must be like this:
 
 ![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger.png)
+
+Go to your IngredientController and create comments for the methods, like this.
+
+```C#
+/// <summary>
+/// Returns all the ingredients
+/// </summary>
+/// <returns></returns>
+[HttpGet]
+[ProducesResponseType(typeof(ApiResult<IEnumerable<IngredientDTO>>), StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<IEnumerable<IngredientDTO>>> GetAll()
+{
+  try
+  {
+    return new ApiResult<IEnumerable<IngredientDTO>>(await _service.GetAll());
+  }
+  catch(APIException ex)
+  {
+    return new ExceptionResult(ex);
+  }
+  catch(Exception ex)
+  {
+    return new ExceptionResult(ex);
+  }
+}
+
+/// <summary>
+/// Creates a new ingredient
+/// </summary>
+/// <param name="ingredient">The ingredient to create</param>
+/// <returns></returns>
+[HttpPost]
+[ProducesResponseType(typeof(IngredientDTO), StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+[Produces("application/json")]
+public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
+{
+  try
+  {
+    return new ApiResult<IngredientDTO>(await _service.Insert(ingredient), StatusCodes.Status201Created);
+  }
+  catch (APIException ex)
+  {
+    return new ExceptionResult(ex);
+  }
+  catch (Exception ex)
+  {
+    return new ExceptionResult(ex);
+  }
+}
+```
+
+Debug your API and... 
+**Amazing! you can explore and test your API using swagger!**
