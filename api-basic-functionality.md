@@ -403,4 +403,7 @@ namespace myweeklydiet.Controllers
 
 This is the moment for test your API!
 
-YES! It works! But you have to fit & finish for do it more elegant
+YES! It works! 
+
+## Next steps
+- [Fit & finish for do it more elegant](https://github.com/dasensio/myweeklydiet/blob/master/api-basic-functionality-fit-and-finish.md)
