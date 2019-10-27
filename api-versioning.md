@@ -82,9 +82,16 @@ namespace Ooredoo_Sports_Backend.Helpers
 ```
 
 
-Go to **ConfigureSwagger** method on **Startup.cs** method and change the call of **AddSwaggerGen** to call **DocInclusionPredicate** and **OperationFilter** to include each action in the correct version in swagger.json:
+Go to **ConfigureSwagger** method on **Startup.cs** method and change the call of **AddSwaggerGen** to:
+- Add the versions 1.0 and 1.1
+- Call **DocInclusionPredicate** and **OperationFilter** to include each action in the correct version in swagger.json
+
+It seems like this
 
 ```C#
+c.SwaggerDoc("v1.1", new Info { Title = "My Weekly Diet API", Version = "v1.1" });
+c.SwaggerDoc("v1.0", new Info { Title = "My Weekly Diet API", Version = "v1.0" });
+
 c.DocInclusionPredicate((docName, apiDesc) =>
 {
   var actionApiVersionModel = apiDesc.ActionDescriptor?.GetApiVersionModel();
@@ -101,3 +108,46 @@ c.DocInclusionPredicate((docName, apiDesc) =>
 });
 c.OperationFilter<ApiVersionOperationFilter>();
 ```
+Finally, add the Swagger endpoint for the new version 1.1 in the call to **app.UserSwaggerUI** in the method **Configure**, like this:
+
+```C#
+app.UseSwaggerUI(c =>
+{
+  c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "MyWeeklyDiet API v1.0");
+  c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "MyWeeklyDiet API v1.1");
+  c.RoutePrefix = string.Empty;
+});
+```
+Swagger is ready for use API Versions!
+
+Is the moment for define the versions of your API. Go to IngredientController and add the ApiVersion attribute for versions 1.0 and 1.1, like this:
+
+```C#
+[ApiController]
+[ApiVersion("1.0")]
+[ApiVersion("1.1")]
+[Route("api/[controller]")]
+public class IngredientController : ControllerBase
+```
+
+Create a new method called Test, and returns "Test v.1.1". Decorate this method as Get request with route "test" and with version 1.1
+
+```C#
+[HttpGet("test")]
+[MapToApiVersion("1.1")]
+public String Test()
+{
+  return "Ok v1.1";
+}
+```
+
+It's time to test the API versioning! 
+
+Execute your API and you will see the two versions
+![Versioning](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Test_swagger_with_versioning_(1).png)
+
+If you change to version 1.1, you will see the test action!!!
+![Versioning](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Test_swagger_with_versioning_(2).png)
+
+## Next steps
+- [Do the challenge!](https://github.com/dasensio/myweeklydiet/blob/master/challenge.md)
