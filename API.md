@@ -57,4 +57,5 @@ You need to store in appsettings.json the ConnectionString of your database. Get
 1. [Make the basic functionality](https://github.com/dasensio/myweeklydiet/blob/master/api-basic-functionality.md)
 2. [Fit & finish the basic functionality](https://github.com/dasensio/myweeklydiet/blob/master/api-basic-functionality-fit-and-finish.md)
 3. [Document your API using Swagger](https://github.com/dasensio/myweeklydiet/blob/master/configure-swagger.md)
-4. API Versioning (Comming soon)
+4. [API Versioning](https://github.com/dasensio/myweeklydiet/blob/master/api-versioning.md)
+5. [Challenge!](https://github.com/dasensio/myweeklydiet/blob/master/challenge.md)
