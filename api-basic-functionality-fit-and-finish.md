@@ -6,7 +6,7 @@ Your are about to:
 - Use DTO for disengage your model database and your user interface.
 
 ## Improve errors management
-Create a new class called **APIExceptionType** in **Exceptions** directory. This class has three properties with only get: Code (string), Message (string) and StatusCode (int) and a constructor for the three parameters (with 400 as fedault value for StatusCode). 
+Create a new class called **APIExceptionType** in **Exceptions** directory. This class has three properties with only get: Code (string), Message (string) and StatusCode (int) and a constructor for the three parameters (with 400 as default value for StatusCode). 
 
 Next, you will create some static properties for standard errors
 
