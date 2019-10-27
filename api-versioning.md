@@ -82,7 +82,7 @@ namespace Ooredoo_Sports_Backend.Helpers
 ```
 
 
-Go to ConfigureSwagger method on Startup.cs method ConfigureSwagger and change the call of AddSwaggerGen and call DocInclusionPredicate and OperationFilter to include each action in the correct swagger.json and OperationFilter:
+Go to **ConfigureSwagger** method on **Startup.cs** method and change the call of **AddSwaggerGen** to call **DocInclusionPredicate** and **OperationFilter** to include each action in the correct version in swagger.json:
 
 ```C#
 c.DocInclusionPredicate((docName, apiDesc) =>
