@@ -128,3 +128,6 @@ public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
 
 Debug your API and... 
 **Amazing! you can explore and test your API using swagger!**
+
+## Next steps
+- [API Versioning](https://github.com/dasensio/myweeklydiet/blob/master/api-versioning.md)
