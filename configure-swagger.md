@@ -63,7 +63,10 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 You have to configure your project to generate XML with documentation. Push right button of the mouse in the project and then, click on Properties.
 
 Go to Build tab -> Output and check XML documentantion file
+![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger_(2).png)
+
 Go to Debug tab -> check "Launch browser" with empty field 
+![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger_(3).png)
 
 Test your API, the result must be like this:
 
