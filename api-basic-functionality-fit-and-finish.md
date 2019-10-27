@@ -484,4 +484,3 @@ Let's go to test your API!
 
 ## Next steps
 - [Configure Swagger](https://github.com/dasensio/myweeklydiet/blob/master/configure-swagger.md)
-- [Configure API Versioning]()
