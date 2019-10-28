@@ -150,4 +150,4 @@ If you change to version 1.1, you will see the test action!!!
 ![Versioning](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Test_swagger_with_versioning_(2).png)
 
 ## Next steps
-- [Do the challenge!](https://github.com/dasensio/myweeklydiet/blob/master/challenge.md)
+- [Publish API in Azure](https://github.com/dasensio/myweeklydiet/blob/master/publish-api-azure.md)
