@@ -69,7 +69,6 @@ Go to Debug tab -> check "Launch browser" with empty field
 ![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger_(3).png)
 
 Test your API, the result must be like this:
-
 ![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger.png)
 
 Go to your IngredientController and create comments for the methods, like this.
@@ -125,6 +124,9 @@ public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
   }
 }
 ```
+right-click on the file myweeklydiet.xml and click on **Properties**. Change the property **Copy to Output Directory** to **Copy always** in order to include this file on deployments.
+![Swagger](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Configure_Swagger_(4).png)
+
 
 Debug your API and... 
 **Amazing! you can explore and test your API using swagger!**
