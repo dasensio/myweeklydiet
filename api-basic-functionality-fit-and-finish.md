@@ -480,6 +480,12 @@ public async Task<ActionResult<IngredientDTO>> Insert(IngredientDTO ingredient)
 }
 ```
 
+If you want to respect camel case in your properties, you have to add a ContractResolver to MVC. Go to Startup.cs and to the method ConfigureServices. Add a ContractResolver like this:
+
+```C#
+services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); 
+```
+
 Let's go to test your API!
 
 ## Next steps
