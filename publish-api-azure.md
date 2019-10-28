@@ -13,3 +13,6 @@ Select the correct App Service and click OK
 
 Finally, click on Publish for deploy in Release
 ![Azure](https://danielasensiolabs.blob.core.windows.net/myweeklydietlab/01_Publish_API_(4).png)
+
+## Next steps
+- [Do the challenge!](https://github.com/dasensio/myweeklydiet/blob/master/challenge.md)
